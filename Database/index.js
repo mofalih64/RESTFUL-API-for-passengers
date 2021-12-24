@@ -1,10 +1,10 @@
 const pool = require("postgres");
 
 const db = pool({
-  user: "postgres",
+  user: "mofalih",
   host: "localhost",
-  database: "passengers_api",
-  password: "Entg12345",
+  database: "passengersapi",
+  password: "QWERY$$",
   port: 5432,
 });
 module.exports = db;
