@@ -20,21 +20,21 @@ CREATE TABLE Flights (
     attendance_time DATE NOT NULL,
 );
 
-CREATE TABLE the_user (
+CREATE TABLE Users (
     id serial PRIMARY KEY,
-    firstname varchar(20) NOT NULL,
-    lastname varchar(20)  NOT NULL,
+    firstname varchar(20) NOT NULL ,
+    lastname varchar(20)  ,
     email varchar(50) NOT NULL,
     password VARCHAR(150) not NULL,
-    username varchar(20) UNIQUE NOT NULL,
-    passport BIGINT  NOT NULL,
-    passport_image varchar(70) NOT NULL
+    username varchar(20) ,
+    passport BIGINT,
+    passport_image varchar(70) 
 );
 
 CREATE TABLE Flight_for_User (
 id serial PRIMARY KEY,
-User_id INT REFERENCES the_user(id),
-Flight_id INT REFERENCES Flights (id),
-
-
+User_id INT REFERENCES Users(id),
+Flight_id INT REFERENCES Flights (id)
 )
+
+INSERT INTO Users (firstname,password) VALUES ('test','1234') RETURNING *;

@@ -9,12 +9,23 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "crypto": "^1.0.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "nodemon": "^2.0.13",
+    "pg": "^8.7.1",
     "postgres": "^1.0.2",
     "slugify": "^1.6.0"
   },
-  "description": ""
+  "description": "un finished restful api using expres,postgresSQL",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mofalih64/RESTFUL-API-for-passengers.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mofalih64/RESTFUL-API-for-passengers/issues"
+  },
+  "homepage": "https://github.com/mofalih64/RESTFUL-API-for-passengers#readme"
 }

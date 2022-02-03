@@ -5,16 +5,25 @@ const app = express();
 app.use(express.json());
 
 const sql = require("../Database/index");
+const pool= require("../Database/datacone")
 
 exports.getAllCities = async (req, res) => {
   try {
-    const theCities = await sql`SELECT * FROM City`;
+    const theCities = await pool.query("SELECT * FROM City");
     res.status(200).json({
       status: "success",
       theCities,
     });
-  } catch (err) {
-    res.status(404).json(err);
+  }
+  // try {
+  //   const theCities = await sql`SELECT * FROM City`;
+  //   res.status(200).json({
+  //     status: "success",
+  //     theCities,
+  //   });
+  // }
+   catch (err) {
+    console.log(err.message);
   }
 };
 
@@ -22,19 +31,20 @@ exports.addCity = async (req, res) => {
   const { Code, cityName } = req.body;
   // console.log(Code, cityName);
   try {
-    const [newCity] = await sql`
-  INSERT into City (
-    Code, city_name
-  ) values (
-    ${Code}, ${cityName}
-  )
-  returning *
-`;
-    // const newCity = await db.query(
-    //   "INSERT INTO City (Code,city_name) VALUES ($1, $2) RETURNING *",
-    //   Code,
-    //   cityName
-    // );
+    const newCity = await pool.query("INSERT into City (Code, city_name) values($1,$2) RETURNING *",[Code,cityName])
+//     `
+//   INSERT into City (
+//     Code, city_name
+//   ) values (
+//     ${Code}, ${cityName}
+//   )
+//   returning *
+// `;
+//     // const newCity = await db.query(
+//     //   "INSERT INTO City (Code,city_name) VALUES ($1, $2) RETURNING *",
+//     //   Code,
+//     //   cityName
+//     // );
 
     res.json(newCity);
   } catch (err) {
@@ -73,6 +83,6 @@ exports.getCity_code = async (req, res) => {
 
     res.json(the_city);
   } catch (err) {
-    console.error(err.message);
+    // console.error(err.message);
   }
 };

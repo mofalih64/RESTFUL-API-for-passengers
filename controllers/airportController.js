@@ -9,6 +9,7 @@ const sql = require("../Database/index");
 exports.getAllAirports = async (req, res) => {
   try {
     const theAirports = await sql`SELECT * FROM Airport`;
+    console.log(req.headers)
     res.status(200).json({
       status: "success",
       theAirports,
@@ -28,14 +29,14 @@ exports.addAirport = async (req, res) => {
   INSERT INTO Airport (
     code, city_id
   ) VALUES (
-    ${airport_code}, ${city_id[0].id}
+    ${airport_code}, ${city_id.rows[0].id}
   )
   returning *
 `;
 
     res.status(201).json(newAirport);
   } catch (err) {
-    console.log(err.message);
+    console.log(err);
   }
 };
 
@@ -48,7 +49,7 @@ exports.updateAirport = async (req, res) => {
    
     res.status(201).json(newairport);
   } catch (err) {
-    console.log(err.message);
+    // console.log(err.message);
   }
 };
 
