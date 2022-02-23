@@ -27,6 +27,7 @@ res.status(401).send("not authorised please sign in")
     console.error(error.message)
      res.status(403).json("not authourised")
 }
+next();
 
 }
 
@@ -62,4 +63,5 @@ exports.validInfo=(req,res,next)=>{
          token= token.splice(7,token.length);
 
         }
+        next();
       }

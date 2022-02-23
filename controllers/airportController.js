@@ -5,6 +5,8 @@ const app = express();
 app.use(express.json());
 
 const sql = require("../Database/index");
+const pool= require("../Database/datacone")
+
 
 exports.getAllAirports = async (req, res) => {
   try {
@@ -23,8 +25,13 @@ exports.addAirport = async (req, res) => {
   
 
   const { airport_code,city_code } = req.body;
+  // console.log(`${airport_code} air port code`)
+  // console.log(`${city_code} city code`)
+
+
   try {
-    let city_id= await sql` SELECT id FROM City WHERE code=${city_code}`
+    let city_id= await pool.query(" SELECT id FROM City WHERE code=$1",[city_code])
+    console.log(city_id.rows[0].id)
     const newAirport = await sql`
   INSERT INTO Airport (
     code, city_id

@@ -8,16 +8,16 @@ CREATE TABLE City (
 CREATE TABLE Airport (
     id serial PRIMARY KEY,
     city_id INT REFERENCES City(id) UNIQUE,
-    code varchar (5) NOT NULL
+    code varchar (5) NOT NULL UNIQUE
 );
 
-CREATE TABLE Flights (
+CREATE TABLE Flight (
     id serial PRIMARY KEY,
-    origin INT REFERENCES Airport (id),
-    destination INT REFERENCES Airport (id),
-    boarding_time DATE NOT NULL,
-    distance INT NOT NULL,
-    attendance_time DATE NOT NULL,
+    origin INT REFERENCES Airport(id) NOT NULL,
+    destination INT REFERENCES Airport (id) NOT NULL,
+    boarding_time DATE,
+    distance INT ,
+    attendance_time DATE,
 );
 
 CREATE TABLE Users (
@@ -38,3 +38,5 @@ Flight_id INT REFERENCES Flights (id)
 )
 
 INSERT INTO Users (firstname,password) VALUES ('test','1234') RETURNING *;
+
+ALTER TABLE Airport ADD UNIQUE (code);
