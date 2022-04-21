@@ -4,13 +4,13 @@ const app = express();
 
 app.use(express.json());
 
-const sql = require("../Database/index");
+// const sql = require("../Database/index");
 const pool= require("../Database/datacone")
 
 
 exports.getAllAirports = async (req, res) => {
   try {
-    const theAirports = await sql`SELECT * FROM Airport`;
+    const theAirports =  await (await pool.query("SELECT * FROM City")).rows;
     console.log(req.headers)
     res.status(200).json({
       status: "success",
@@ -31,19 +31,16 @@ exports.addAirport = async (req, res) => {
 
   try {
     let city_id= await pool.query(" SELECT id FROM City WHERE code=$1",[city_code])
-    console.log(city_id.rows[0].id)
-    const newAirport = await sql`
-  INSERT INTO Airport (
-    code, city_id
-  ) VALUES (
-    ${airport_code}, ${city_id.rows[0].id}
-  )
-  returning *
-`;
+    city_id=city_id.rows.id;
+        console.log(city_id)
+
+    const newAirport = await (await pool.query("INSERT INTO Airport (code, city_id ) VALUES ( $1, $2 ) returning *",[airport_code,city_id])).rows;
 
     res.status(201).json(newAirport);
   } catch (err) {
-    console.log(err);
+    res.json(err.message);
+
+    console.log(err.message);
   }
 };
 
@@ -52,7 +49,8 @@ exports.updateAirport = async (req, res) => {
   const { id } = req.params;
 
   try {
-   let newairport= await sql`UPDATE Airport SET code = ${code} WHERE id = ${id} returning *`;
+    await  pool.query(" UPDATE City SET Code = $1} WHERE id= $2 RETURNING *",[Code,id]);
+   let newairport= pool.query("UPDATE Airport SET code = $1 WHERE id = $2 returning *",[code,id]);
    
     res.status(201).json(newairport);
   } catch (err) {
@@ -63,7 +61,7 @@ exports.updateAirport = async (req, res) => {
 exports.removeAirport=async(req,res)=>{
   const { id } = req.params;
   try{
-  await sql`DELETE FROM Airport WHERE id=${id}`
+  await pool.query("DELETE FROM Airport WHERE id=$1",[id])
   res.status(202).json({
     "status":"succees"
   })

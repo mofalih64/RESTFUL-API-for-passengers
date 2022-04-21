@@ -13,7 +13,7 @@ cityRouter
     authController.authorize,
     cityControler.updateCity
   )
-  .post(authController.authorize,
+  .post(
     cityControler.addCity
   );
 

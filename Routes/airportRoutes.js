@@ -13,7 +13,7 @@ airportRouter
     authController.authorize,
     airportController.updateAirport
   )
-  .post(authController.authorize,
+  .post(
     airportController.addAirport
   );
 

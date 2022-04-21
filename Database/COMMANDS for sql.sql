@@ -17,7 +17,7 @@ CREATE TABLE Flight (
     destination INT REFERENCES Airport (id) NOT NULL,
     boarding_time DATE,
     distance INT ,
-    attendance_time DATE,
+    attendance_time DATE
 );
 
 CREATE TABLE Users (
@@ -33,9 +33,9 @@ CREATE TABLE Users (
 
 CREATE TABLE Flight_for_User (
 id serial PRIMARY KEY,
-User_id INT REFERENCES Users(id),
-Flight_id INT REFERENCES Flights (id)
-)
+User_id INT REFERENCES Unique Users(id),
+Flight_id INT REFERENCES Flight(id)
+);
 
 INSERT INTO Users (firstname,password) VALUES ('test','1234') RETURNING *;
 

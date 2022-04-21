@@ -19,7 +19,7 @@ res.status(401).send("not authorised please sign in")
       }
 
     const payload=await promisify (jwt.verify)(token,process.env.JWT_SECRET);
-    console.log(payload)
+    // console.log(payload)
     req.user=payload.user;
     next();
 
@@ -27,7 +27,6 @@ res.status(401).send("not authorised please sign in")
     console.error(error.message)
      res.status(403).json("not authourised")
 }
-next();
 
 }
 
